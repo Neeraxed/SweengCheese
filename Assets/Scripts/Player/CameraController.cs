@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
@@ -13,7 +11,7 @@ public class CameraController : MonoBehaviour
 		
     }
 
-    void Update()
+    void FixedUpdate()
     {
         Vector3 newPosition = new Vector3(offset.x+(target.position.x)/2, transform.position.y, offset.z+target.position.z);
 		transform.position = Vector3.Lerp(transform.position, newPosition, 10*Time.deltaTime);
