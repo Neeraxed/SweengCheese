@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
-    public float jumpForce;
-    public float Gravity = -5;
     public float laneDistance = 3;
     public float forwardSpeed;
     public float maxSpeed;
@@ -13,18 +12,43 @@ public class PlayerController : MonoBehaviour
     private Vector3 direction;
     private int desiredLane = 1; // 0 - left, 1 - middle, 2 - right
 
-    void Start()
+    public static event Action gameEnded;
+    public static event Action CollectedAmountChanged;
+    public float pointToCollectActivationRadius = 5f;
+    private Collider[] pointToCollectCollidersBuffer = new Collider[1];
+
+    public void DetectPointToCollect()
+    {
+        var hits = Physics.OverlapSphereNonAlloc(this.transform.position, pointToCollectActivationRadius, pointToCollectCollidersBuffer, 1 << PointToCollect.PointToCollectLayer);
+
+        if (hits > 0)
+        {
+            var pointToCollect = pointToCollectCollidersBuffer[0].GetComponent<PointToCollect>();
+            pointToCollect.Collect(ref PlayerManager.numberOfCheese);
+            CollectedAmountChanged?.Invoke();
+        }
+    }
+    private void OnEnable()
+    { 
+        PointToCollect.PointToCollectTriggered += DetectPointToCollect;
+    }
+    private void OnDisable()
+    { 
+        PointToCollect.PointToCollectTriggered -= DetectPointToCollect;
+    }
+    private void Start()
     {
         controller = GetComponent<CharacterController>();
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (!PlayerManager.isGameStarted) return;
+    
 
         if (forwardSpeed < maxSpeed)
         {
-            forwardSpeed += 0.1f * Time.deltaTime;
+            forwardSpeed += 0.02f * Time.deltaTime;
         }
 
         animator.SetBool("isGameStarted", true);
@@ -70,22 +94,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // private void OnCollisionEnter(Collision collision)
-    // {
-    //     if (collision.transform.CompareTag("Obstacle"))
-    //     {
-    //         PlayerManager.gameOver = true;
-    //         FindObjectOfType<AudioManager>().PlaySound("GameOver");
-    //     }
-    // }
-
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         if (hit.transform.tag == "Obstacle")
         {
             PlayerManager.gameOver = true;
+            gameEnded?.Invoke();
+            Debug.Log("gameEnded.Invoke()");
             hit.collider.enabled = false;
             FindObjectOfType<AudioManager>().PlaySound("GameOver");
         }
     }
+    
 }
