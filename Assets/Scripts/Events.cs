@@ -3,13 +3,12 @@ using UnityEngine;
 
 public class Events : MonoBehaviour
 {
-	public void ReplayGame()
-	{
-		SceneManager.LoadScene("Level01");
-	}
 	public void QuitGame()
 	{
 		Application.Quit();
 	}
-	
+	public void LoadScene(int index)
+	{
+		SceneManager.LoadScene(index);
+	}
 }

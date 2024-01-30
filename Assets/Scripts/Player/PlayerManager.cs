@@ -15,6 +15,7 @@ public class PlayerManager : MonoBehaviour
 
     public static int numberOfCheese;
     public Text cheeseText;
+    public Text highScore;
 
     private const string YandexLeaderBoardName = "CheeseScore";
 
@@ -25,6 +26,7 @@ public class PlayerManager : MonoBehaviour
         Destroy(ArrowR);
         Destroy(ArrowL);
         isGameStarted = true;
+        UpdateHighScore();
     }
     public void StopGame()
     {
@@ -61,7 +63,10 @@ public class PlayerManager : MonoBehaviour
         if (numberOfCheese > PlayerPrefs.GetInt("HighScore", 0))
         {
             PlayerPrefs.SetInt("HighScore", numberOfCheese);
+            UpdateHighScore();
             YandexGame.NewLeaderboardScores(YandexLeaderBoardName, numberOfCheese);
         }
     }
+    
+    private void UpdateHighScore() => highScore.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
 }

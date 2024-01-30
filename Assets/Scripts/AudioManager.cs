@@ -28,5 +28,8 @@ public class AudioManager : MonoBehaviour
 		
 	}
 
-
+	public void SoundOnOff()
+	{
+		AudioListener.pause = !AudioListener.pause;
+	}
 }
