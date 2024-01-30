@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
@@ -22,10 +20,9 @@ public class PlayerManager : MonoBehaviour
 	
 	public GameObject playerForCoordinates;
 	*/
-	
 
-	
-    void Start()
+
+	void Start()
     {
         gameOver = false;
 		Time.timeScale =1 ;
@@ -36,14 +33,15 @@ public class PlayerManager : MonoBehaviour
 		
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if(gameOver) 
-		{
-			Time.timeScale = 0;
-			gameOverPanel.SetActive(true);
+	    if(gameOver) 
+	    {
+		    Time.timeScale = 0;
+		    gameOverPanel.SetActive(true);
 			
-		}
+	    }
+
 		cheeseText.text = "Cheese: " +numberOfCheese;
 		/*distance.text = "Distance: " + playerForCoordinates.transform.position.z; */
 		if(SwipeManager.tap)
@@ -55,7 +53,5 @@ public class PlayerManager : MonoBehaviour
 			Destroy(ArrowL); 
 			isGameStarted = true;
 		}
-		
-		
     }
 }
