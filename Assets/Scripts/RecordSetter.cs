@@ -4,8 +4,8 @@ using UnityEngine.UI;
 public class RecordSetter : MonoBehaviour
 {
     public Text highScore;
-    private void OnEnable()
+    private void Awake()
     {
-        highScore.text = PlayerPrefs.GetInt("CheeseScore", 0).ToString();
+        highScore.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
     }
 }

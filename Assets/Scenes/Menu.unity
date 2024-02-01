@@ -138,6 +138,10 @@ PrefabInstance:
       propertyPath: sounds.Array.data[2].clip
       value: 
       objectReference: {fileID: 8300000, guid: 0488f20946be708498e6fa9cd5173e90, type: 3}
+    - target: {fileID: 4705963881296775266, guid: 1f7725e20f90b7f4793773f20447c46e, type: 3}
+      propertyPath: sounds.Array.data[0].volume
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 4705963881296775267, guid: 1f7725e20f90b7f4793773f20447c46e, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -2041,7 +2045,7 @@ GameObject:
   - component: {fileID: 2002628005}
   - component: {fileID: 2002628004}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
